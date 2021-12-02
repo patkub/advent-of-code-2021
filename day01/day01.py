@@ -18,7 +18,7 @@ def count_increased(f):
 if __name__ == "__main__":
   # parse arguments
   if len(sys.argv) < 1:
-    print("Usage: ./day1.py input")
+    print("Usage: ./day01.py input")
     exit(1)
 
   input_file = sys.argv[1]
