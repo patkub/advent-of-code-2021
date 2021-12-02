@@ -4,6 +4,12 @@ import sys
 
 
 def count_increased(values):
+    """
+    Count how many measurements increased from previous value
+
+    :param values: List of values
+    :returns: Number of measurements that increased from previous value
+    """
     # how many measurements increased
     increased = 0
     # first value
@@ -17,6 +23,12 @@ def count_increased(values):
 
 
 def count_increased_part2(values):
+    """
+    Count how many measurements increased in a three-measurement sliding window
+
+    :param values: List of values
+    :returns: Number of measurements that increased in a three-measurement sliding window
+    """
     # how many measurements increased in three-measurement sliding window
     increased = 0
     for i in range(2, len(values) - 1, 1):

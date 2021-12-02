@@ -4,6 +4,12 @@ import sys
 
 
 def calc_horizontal_depth(lines):
+    """
+    Calculate horizontal depth
+
+    :param lines: List of lines from file
+    :returns: Horizontal position multiplied by final depth
+    """
     horizontal, depth = 0, 0
 
     for line in lines:
@@ -23,6 +29,12 @@ def calc_horizontal_depth(lines):
 
 
 def calc_horizontal_depth_part2(lines):
+    """
+    Calculate horizontal depth with aim
+
+    :param lines: List of lines from file
+    :returns: Horizontal position multiplied by final depth
+    """
     horizontal, depth, aim = 0, 0, 0
 
     for line in lines:
