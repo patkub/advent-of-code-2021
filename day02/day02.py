@@ -3,11 +3,10 @@
 import sys
 
 
-def calc_horizontal_depth(f):
+def calc_horizontal_depth(lines):
     horizontal, depth = 0, 0
 
-    # read the rest of the file line-by-line
-    for line in f:
+    for line in lines:
         command = line.strip().split(" ")
         # command = ["forward", "5"]
         if len(command) >= 2:
@@ -23,11 +22,10 @@ def calc_horizontal_depth(f):
     return horizontal * depth
 
 
-def calc_horizontal_depth_part2(f):
+def calc_horizontal_depth_part2(lines):
     horizontal, depth, aim = 0, 0, 0
 
-    # read the rest of the file line-by-line
-    for line in f:
+    for line in lines:
         command = line.strip().split(" ")
         # command = ["forward", "5"]
         if len(command) >= 2:
@@ -55,9 +53,12 @@ if __name__ == "__main__":
         exit(1)
 
     input_file = sys.argv[1]
+    # read file line-by-line
     with open(input_file) as f:
-        res = calc_horizontal_depth(f)
-        print(res)
-        f.seek(0)
-        res = calc_horizontal_depth_part2(f)
-        print(res)
+        lines = [line.strip() for line in f.readlines()]
+
+    res = calc_horizontal_depth(lines)
+    print(res)
+
+    res = calc_horizontal_depth_part2(lines)
+    print(res)
