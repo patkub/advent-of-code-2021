@@ -1,4 +1,4 @@
 Run with:
 ```
-./day1.py input
+./day01.py input
 ```

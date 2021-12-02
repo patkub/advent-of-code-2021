@@ -15,13 +15,14 @@ def count_increased(f):
     previous = current
   return increased
 
-# parse arguments
-if len(sys.argv) < 1:
-  print("Usage: ./day1.py input")
-  exit(1)
+if __name__ == "__main__":
+  # parse arguments
+  if len(sys.argv) < 1:
+    print("Usage: ./day1.py input")
+    exit(1)
 
-input_file = sys.argv[1]
-with open(input_file) as f:
-  increased = count_increased(f)
-  print(increased)
+  input_file = sys.argv[1]
+  with open(input_file) as f:
+    increased = count_increased(f)
+    print(increased)
 
