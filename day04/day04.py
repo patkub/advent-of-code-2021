@@ -3,15 +3,20 @@
 import sys
 from copy import deepcopy
 
-def mark_all(boards, n):
+
+def mark_all(boards, n, winning_boards_ids=[]):
     """
     Mark board number by setting it to -1 on all boards
 
     :param boards: list of boards
     :param n: number to mark
+    :param winning_boards_ids: list of winning board ids
     """
+    # mark number by setting board number to -1
     for i in range(len(boards)):
-        mark(boards[i], n)
+        if i not in winning_boards_ids:
+            mark(boards[i], n)
+
 
 def mark(board, n):
     """
@@ -100,17 +105,13 @@ def play_bingo_part2(numbers, boards):
     :param boards: list of boards
     :returns: score = sum unmarked * number called
     """
-    n, score = 0, None
-    last_number = None
+    n, score, last_number = 0, None, None
 
-    winning_boards = []
-    winning_boards_ids = []
+    winning_boards, winning_boards_ids = [], []
 
     while n < len(numbers):
         # mark number by setting board number to -1
-        for i in range(len(boards)):
-            if i not in winning_boards_ids:
-                mark(boards[i], numbers[n])
+        mark_all(boards, numbers[n], winning_boards_ids)
 
         # check if a board won
         # row/column sum must be -5
@@ -118,18 +119,15 @@ def play_bingo_part2(numbers, boards):
             if (i not in winning_boards_ids) and check_winner(boards[i]):
                 # won!
                 # boards[i] is winner
-                #won = True
                 winning_boards.append(deepcopy(boards[i]))
-                #print(boards[i])
-                #exit(1)
-                last_number = numbers[n]
                 winning_boards_ids.append(i)
+                last_number = numbers[n]
         n += 1
 
     last_winner = winning_boards[-1]
     sum = sum_unmarked(last_winner)
     score = sum * last_number
-    
+
     return score
 
 
