@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import sys, copy
+import sys
 from copy import deepcopy
 
 def mark_all(boards, n):
