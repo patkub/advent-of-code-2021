@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-import sys
+import sys, copy
+from copy import deepcopy
 
-
-def mark_board_number(boards, n):
+def mark_all(boards, n):
     """
     Mark board number by setting it to -1 on all boards
 
@@ -11,10 +11,19 @@ def mark_board_number(boards, n):
     :param n: number to mark
     """
     for i in range(len(boards)):
-        for j, row in enumerate(boards[i]):
-            for col in range(len(row)):
-                if row[col] == n:
-                    boards[i][j][col] = -1
+        mark(boards[i], n)
+
+def mark(board, n):
+    """
+    Mark board number by setting it to -1
+
+    :param board: board
+    :param n: number to mark
+    """
+    for j, row in enumerate(board):
+        for col in range(len(row)):
+            if row[col] == n:
+                board[j][col] = -1
 
 
 def check_winner(board):
@@ -60,8 +69,8 @@ def play_bingo(numbers, boards):
     n, won, score = 0, False, None
 
     while n < len(numbers) and not won:
-        # mark number by setting board number to -1
-        mark_board_number(boards, numbers[n])
+        # mark number by setting board number to -1 on all boards
+        mark_all(boards, numbers[n])
 
         # check if a board won
         # row/column sum must be -5
@@ -80,6 +89,47 @@ def play_bingo(numbers, boards):
 
         n += 1
 
+    return score
+
+
+def play_bingo_part2(numbers, boards):
+    """
+    Play bingo
+
+    :param numbers: bingo numbers to call
+    :param boards: list of boards
+    :returns: score = sum unmarked * number called
+    """
+    n, score = 0, None
+    last_number = None
+
+    winning_boards = []
+    winning_boards_ids = []
+
+    while n < len(numbers):
+        # mark number by setting board number to -1
+        for i in range(len(boards)):
+            if i not in winning_boards_ids:
+                mark(boards[i], numbers[n])
+
+        # check if a board won
+        # row/column sum must be -5
+        for i in range(len(boards)):
+            if (i not in winning_boards_ids) and check_winner(boards[i]):
+                # won!
+                # boards[i] is winner
+                #won = True
+                winning_boards.append(deepcopy(boards[i]))
+                #print(boards[i])
+                #exit(1)
+                last_number = numbers[n]
+                winning_boards_ids.append(i)
+        n += 1
+
+    last_winner = winning_boards[-1]
+    sum = sum_unmarked(last_winner)
+    score = sum * last_number
+    
     return score
 
 
@@ -104,4 +154,8 @@ if __name__ == "__main__":
 
     # play bingo!
     score = play_bingo(numbers, boards)
+    print(score)
+
+    boards = list(zip(*(iter(lines),) * 5))
+    score = play_bingo_part2(numbers, boards)
     print(score)
